@@ -41,8 +41,8 @@ class Status(Base):
 class UserStatus(Base):
     __tablename__ = 'user_status'
     sv_id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('users.id_U'))
-    status_id=Column(Integer, ForeignKey('status.id_S'))
+    user_id = Column(Integer, ForeignKey=('users.id_U'))
+    status_id=Column(Integer, ForeignKey=('status.id_S'))
 
 #статьи
 class Article(BaseObject):
@@ -57,4 +57,4 @@ class Article(BaseObject):
 class UserArticle(BaseObject):
     __tablename__ = 'art_user'
     id = Column(Integer, ForeignKey=('articles.id_A'))
-    user_id = Column(Integer, ForeignKey('users.id_U'))
+    user_id = Column(Integer, ForeignKey=('users.id_U'))
