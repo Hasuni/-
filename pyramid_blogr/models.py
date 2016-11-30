@@ -1,30 +1,27 @@
+# standard library
+import datetime
+
+# SQLAlchemy
 from sqlalchemy import (
-    Column,
-    Index,
-    Integer,
     Text,
-    )
-
-from sqlalchemy.ext.declarative import declarative_base
-
-from sqlalchemy.orm import (
-    scoped_session,
-    sessionmaker,
-    )
-
+    Index,
+    Column,
+    Integer,
+    Unicode,
+    DateTime,
+    ForeignKey,
+    UnicodeText
+)
+from sqlalchemy.orm import sessionmaker, scoped_session
 from zope.sqlalchemy import ZopeTransactionExtension
+from sqlalchemy.ext.declarative import declarative_base
 
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 Base = declarative_base()
 
 
-import datetime
-
-from pyramid_sqlalchemy import BaseObject
-from sqlalchemy import Column, ForeignKey, DateTime, Integer, Unicode, UnicodeText
-
 #пользователи
-class User(BaseObject):
+class User(Base):
     __tablename__ = 'users'
     id_U = Column(Integer, primary_key=True)
     name = Column(Unicode(255), unique=True, nullable=False)
@@ -40,12 +37,11 @@ class Status(Base):
 #соединим Пользоваталей и Статусы
 class UserStatus(Base):
     __tablename__ = 'user_status'
-    sv_id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey=('users.id_U'))
-    status_id=Column(Integer, ForeignKey=('status.id_S'))
+    user_id = Column(Integer, ForeignKey('users.id_U'), primary_key=True)
+    status_id=Column(Integer, ForeignKey('status.id_S'), primary_key=True)
 
 #статьи
-class Article(BaseObject):
+class Article(Base):
     __tablename__ = 'articles'
     id_A = Column(Integer, primary_key=True)
     title = Column(Unicode(255), unique=True, nullable=False)
@@ -53,8 +49,8 @@ class Article(BaseObject):
     created = Column(DateTime, default=datetime.datetime.utcnow)
     edited = Column(DateTime, default=datetime.datetime.utcnow)
 
-    #соединим Статьи и их авторов:
-class UserArticle(BaseObject):
+#соединим Статьи и их авторов:
+class UserArticle(Base):
     __tablename__ = 'art_user'
-    id = Column(Integer, ForeignKey=('articles.id_A'))
-    user_id = Column(Integer, ForeignKey=('users.id_U'))
+    id = Column(Integer, ForeignKey('articles.id_A'), primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.id_U'), primary_key=True)
