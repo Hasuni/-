@@ -16,7 +16,7 @@ requires = [
     'SQLAlchemy',
     'transaction',
     'zope.sqlalchemy',
-    'waitress',
+    'waitress'
     ]
 
 setup(name='pyramid_blogr',
