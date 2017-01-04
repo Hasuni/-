@@ -34,4 +34,37 @@ might be caused by one of the following things:
 After you fix the problem, please restart the Pyramid application to
 try it again.
 """
+@view_config(route_name='blog',
+             renderer='../Сайт/index.html')
+def index_page(request):
+    page = int(request.params.get('page', 1))
+    paginator = Article.get_paginator(request, page)
+    return {'paginator': paginator}
 
+
+@view_config(route_name='blog_article', renderer='../Сайт/Post.html')
+def blog_view(request):
+    id = int(request.matchdict.get('id', -1))
+    article = Article.by_id(id)
+    if not article:
+        return HTTPNotFound()
+    return {'article': article}
+
+
+@view_config(route_name='blog_create',
+             renderer='../Сайт/newPost.html')
+def blog_create(request):
+    form = get_form(request)
+    if request.method == 'POST':
+        try:
+            values = form.validate(request.POST.items())
+        except deform.ValidationFailure as e:
+            return {'form': e.render(),
+                    'action': request.matchdict.get('action')}
+
+
+@view_config(route_name='auth', match_param='action=in', renderer='string',
+             request_method='POST')
+@view_config(route_name='auth', match_param='action=out', renderer='string')
+def sign_in_out(request):
+    return {}
