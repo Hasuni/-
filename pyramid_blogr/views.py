@@ -67,7 +67,7 @@ def blog_create(request):
     article=Article('','')
     return dict(article=article, logged_in=authenticated_user_id(request))
 
-@view_config(route_name='login', render='../Сайт/Autorisation')
+@view_config(route_name='login', render='../Сайт/Autorisation.html')
 def login(request)
     if 'form.submitted' in request.params:
         login=request.params['login']
@@ -86,3 +86,14 @@ def login(request)
 def logout(request):
     headers=forget(request)
     return HTTPFound(location=Autorisation.html, headers=headers)
+        
+@view_config(route_name='register', render='../Сайт/Registration.html')
+def register(request):
+    form=RegistrationForm(request.POST)
+    if request.method =='POST' and form.validate():
+        new_user=User(name=form.username.data)
+        new_user.set_password(form.password.data.encode('utf8'))
+        request.dbsession.add(new_user)
+        return HTTPFound(location=request.rout_url('view_blog'))
+    return {'form':form}
+    

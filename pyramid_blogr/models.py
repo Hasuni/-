@@ -26,7 +26,8 @@ class User(Base):
     id= Column(Integer, primary_key=True)
     name = Column(Unicode(255), unique=True, nullable=False)
     password = Column(Unicode(255), nullable=False
-
+    aboutme = Column(UnicodeText, default='')
+    
 #статусы
 class Status(Base):
     __tablename__ = 'status'
