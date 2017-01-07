@@ -34,37 +34,55 @@ might be caused by one of the following things:
 After you fix the problem, please restart the Pyramid application to
 try it again.
 """
-@view_config(route_name='blog',
-             renderer='../Сайт/index.html')
-def index_page(request):
-    page = int(request.params.get('page', 1))
-    paginator = Article.get_paginator(request, page)
-    return {'paginator': paginator}
+
+@view_config(route_name='view_blog',renderer='../Сайт/index.html')
+def view_blog(request):
+    posts=DBSession.query(Article).order_by(desc(Post.id))    
+    return dict(posts=posts)
+
+@view_config(route_name='view_my',renderer='../Сайт/My.html')
+def view_my(request):
+    posts=DBSession.query(Article).filter_by(id=user_id).order_by(desc(Post.id))    
+    return dict(posts=posts)
 
 
 @view_config(route_name='blog_article', renderer='../Сайт/Post.html')
-def blog_view(request):
-    id = int(request.matchdict.get('id', -1))
-    article = Article.by_id(id)
-    if not article:
-        return HTTPNotFound()
-    return {'article': article}
+def blog_article(request):
+    id = request.matchdict['postid']
+    post=DBSession.query(Article).filter_by(id=postid).first()    
+    if (post is None):
+        return HTTPNotFound('No such page')
 
 
 @view_config(route_name='blog_create',
              renderer='../Сайт/newPost.html')
 def blog_create(request):
     form = get_form(request)
-    if request.method == 'POST':
-        try:
-            values = form.validate(request.POST.items())
-        except deform.ValidationFailure as e:
-            return {'form': e.render(),
-                    'action': request.matchdict.get('action')}
+    if 'form.submitted' in request.params:
+        title = request.params['title']
+        content = request.params['content']
+        article = Article(title,content)
+        DBSession.add(article)
+        return HTTPFound(location=request.route_url('view_blog'))
+    article=Article('','')
+    return dict(article=articl, logged_in=authenticated_user_id(request))
 
-
-@view_config(route_name='auth', match_param='action=in', renderer='string',
-             request_method='POST')
-@view_config(route_name='auth', match_param='action=out', renderer='string')
-def sign_in_out(request):
-    return {}
+@view_config(route_name='login', render='../Сайт/Autorisation')
+def login(request)
+    if 'form.submitted' in request.params:
+        login=request.params['login']
+        password = request.params['password']
+        if User.get(login) == password:
+            headers=remember(request.login)
+            return HTTPFound(location=index.html, headers=headers)
+        message = 'Fail'
+    return dict(
+        message=message,
+        login=login,
+        password=password,
+    )
+        
+@view_config(route_name='logout')
+def logout(request):
+    headers=forget(request)
+    return HTTPFound(location=Autorisation.html, headers=headers)

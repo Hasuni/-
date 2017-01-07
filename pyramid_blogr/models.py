@@ -46,8 +46,6 @@ class Article(Base):
     id_A = Column(Integer, primary_key=True)
     title = Column(Unicode(255), unique=True, nullable=False)
     content = Column(UnicodeText, default=u'')
-    created = Column(DateTime, default=datetime.datetime.utcnow)
-    edited = Column(DateTime, default=datetime.datetime.utcnow)
 
 #соединим Статьи и их авторов:
 class UserArticle(Base):
