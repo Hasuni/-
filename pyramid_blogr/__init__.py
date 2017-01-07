@@ -16,7 +16,7 @@ def main(global_config, **settings):
     config = Configurator(settings=settings)
     config.include('pyramid_chameleon')
     config.add_static_view('static', 'static', cache_max_age=3600)
-     config.add_route('blog', '/') #главная
+    config.add_route('blog', '/') #главная
     config.add_route('registration', '/')#регистрация
     config.add_route('my', '/')#статьи пользователя
     config.add_route('blog_article', '/article/{id:\d+}')#отобразить статью
