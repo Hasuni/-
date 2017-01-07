@@ -65,7 +65,7 @@ def blog_create(request):
         DBSession.add(article)
         return HTTPFound(location=request.route_url('view_blog'))
     article=Article('','')
-    return dict(article=articl, logged_in=authenticated_user_id(request))
+    return dict(article=article, logged_in=authenticated_user_id(request))
 
 @view_config(route_name='login', render='../Сайт/Autorisation')
 def login(request)
