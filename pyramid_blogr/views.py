@@ -36,39 +36,44 @@ After you fix the problem, please restart the Pyramid application to
 try it again.
 """
 
-@view_config(route_name='view_blog',renderer='../Сайт/index.html')
+@view_config(route_name='view_blog',renderer='../sait/index.html')
 def view_blog(request):
     posts=DBSession.query(Article).order_by(desc(Post.id))    
     return dict(posts=posts)
 
-@view_config(route_name='view_my',renderer='../Сайт/My.html')
+@view_config(route_name='view_my',renderer='../sait/My.html')
 def view_my(request):
     posts=DBSession.query(Article).filter_by(id=user_id).order_by(desc(Post.id))    
     return dict(posts=posts)
 
 
-@view_config(route_name='blog_article', renderer='../Сайт/Post.html')
+@view_config(route_name='blog_article', renderer='../sait/Post.html')
 def blog_article(request):
     id = request.matchdict['postid']
-    post=DBSession.query(Article).filter_by(id=postid).first()    
+    post=DBSession.query(Article).filter_by(id=postid).first()
+    title= post.title
+    content= post.content   
     if (post is None):
         return HTTPNotFound('No such page')
 
 
 @view_config(route_name='blog_create',
-             renderer='../Сайт/newPost.html')
+             renderer='../sait/newPost.html')
 def blog_create(request):
     form = get_form(request)
     if 'form.submitted' in request.params:
         title = request.params['title']
         content = request.params['content']
+        new_user=User(name=form.username.data)
+        id=DBSession.query(Article)
         article = Article(title,content)
         DBSession.add(article)
+        DBSession.add(UserArticle(id=article.id_A,user_id=authenticated_userid(request))
         return HTTPFound(location=request.route_url('view_blog'))
     article=Article('','')
-    return dict(article=article, logged_in=authenticated_user_id(request))
+    return dict(article=article, logged_in=authenticated_userid(request))
 
-@view_config(route_name='login', render='../Сайт/Autorisation.html')
+@view_config(route_name='login', render='../sait/Autorisation.html')
 def login(request)
     if 'form.submitted' in request.params:
         login=request.params['login']
@@ -88,7 +93,7 @@ def logout(request):
     headers=forget(request)
     return HTTPFound(location=Autorisation.html, headers=headers)
         
-@view_config(route_name='register', render='../Сайт/Registration.html')
+@view_config(route_name='register', render='../sait/Registration.html')
 def register(request):
     form=RegistrationForm(request.POST)
     if request.method =='POST' and form.validate():
