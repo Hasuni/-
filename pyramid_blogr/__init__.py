@@ -1,5 +1,6 @@
 from pyramid.config import Configurator
 from sqlalchemy import engine_from_config
+from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
 from .models import (
     DBSession,
@@ -14,14 +15,14 @@ def main(global_config, **settings):
     DBSession.configure(bind=engine)
     Base.metadata.bind = engine
     config = Configurator(settings=settings)
-    config.include('pyramid_chameleon')
+    config.include('pyramid_chameleon') 
     config.add_static_view('static', 'static', cache_max_age=3600)
-    config.add_route('view_blog', '/') #главная
-    config.add_route('register', '/register')#регистрация
-    config.add_route('view_my', '/')#статьи пользователя
-    config.add_route('blog_article', '/')#отобразить статью
-    config.add_route('blog_create','/{postid}')#создать статью
-    config.add_route('login')#вход
-    config.add_route('logout')#выход
+    config.add_route('view_blog', '/index') 
+    config.add_route('register', '/register')
+    config.add_route('view_my', '/my')
+    config.add_route('blog_article', '/{postid}')
+    config.add_route('blog_create','/{postid}')
+    config.add_route('login')
+    config.add_route('logout')
     config.scan()
     return config.make_wsgi_app()

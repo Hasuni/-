@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<title>Registration</title>
+<link rel="stylesheet" type="text/css" media="all" href="style.css" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,300italic,300,700,700italic|Open+Sans+Condensed:300,700' rel="stylesheet" type='text/css'>
+
+<script type="text/javascript" src="style/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="style/js/jquery.masonry.min.js"></script>
+<script type="text/javascript" src="style/js/jquery.backstretch.min.js"></script>
+<script type="text/javascript">
+	$.backstretch("style/images/bg/7.jpg");
+</script>
+<script type="text/javascript" src="style/js/scripts.js"></script>
+</head>
+<body>
+
+<div class="topline" ></div>
+<div class="scanlines"></div>
+
+<!-- Begin Header -->
+<div class="header-wrapper opacity">
+	<div class="header">
+		<!-- Begin Logo -->
+		<div class="logo">
+				<img src="style/images/logo.png" alt="" />
+	    </div>
+		<!-- End Logo -->
+		<!-- Begin Menu -->
+		<div id="menu-wrapper">
+			<div id="menu" class="menu">
+				
+			</div>
+		</div>
+		<div class="clear"></div>
+		<!-- End Menu -->
+	</div>
+</div>
+<!-- End Header -->
+<!-- Begin Wrapper -->
+<div class="wrapper"><!-- Begin Intro -->
+<div class="intro">Умение ловко прятаться теряет всякий смысл, если тебя никто не ищет.</div>
+
+<!-- Begin Container -->
+<div class="box">
+
+		<h1 class="title">Регистрация</h1>
+		
+		<div class="one-third">
+			<div class="outer none"><span class="inset"><img src="style/images/wel.png" alt="Hello" title="Hello" /></span></div>
+		</div>
+		
+		<div class="two-third last">
+			<h2>Заполните форму регистрации</h2>
+			<form action="" method="post" name="send_info">
+				<label for="username">Ваш логин (email):</label>
+				<br><input type="text" name="username" id="username">
+				<div id='error2'>Неверный ввод данных адреса почты!</div>
+				<br><label for="password">Пароль:</label>
+				<br><input type="password" name="password" id="password">
+				<div id='error'>Пароль содержит недопустимые символы!</div>
+				<br><label for="aboutme">Информация о себе:</label>
+				<br><textarea name="aboutme" id="aboutme" rows="3"></textarea>
+				<br>
+				<br><input type="button" value="Зарегистрироваться" onclick="send('send_info')">
+			</form>
+		</div>
+		<div class="clear"></div>
+
+</div>
+<!-- End Container -->
+
+</div>
+<!-- End Wrapper -->
+{% endblock %}

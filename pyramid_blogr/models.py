@@ -1,7 +1,4 @@
-# standard library
 import datetime
-
-# SQLAlchemy
 from sqlalchemy import (
     Text,
     Index,
@@ -15,39 +12,35 @@ from sqlalchemy import (
 from sqlalchemy.orm import sessionmaker, scoped_session
 from zope.sqlalchemy import ZopeTransactionExtension
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship, backref
 
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 Base = declarative_base()
 
 
-#пользователи
+
 class User(Base):
     __tablename__ = 'users'
-    id= Column(Integer, primary_key=True)
+    id_U= Column(Integer, primary_key=True)
     name = Column(Unicode(255), unique=True, nullable=False)
-    password = Column(Unicode(255), nullable=False
+    password = Column(Unicode(255), nullable=False)
     aboutme = Column(UnicodeText, default='')
+
+    def _repr_(self):
+        return self.name+" "+self.password+" "+str(self.access)
     
-#статусы
-class Status(Base):
-    __tablename__ = 'status'
-    id_S = Column(Integer, primary_key=True)
-    name = Column(Unicode(255), nullable=False, unique=True)
 
-#соединим Пользоваталей и Статусы
-class UserStatus(Base):
-    __tablename__ = 'user_status'
-    user_id = Column(Integer, ForeignKey('users.id_U'), primary_key=True)
-    status_id=Column(Integer, ForeignKey('status.id_S'), primary_key=True)
 
-#статьи
+
 class Article(Base):
     __tablename__ = 'articles'
     id_A = Column(Integer, primary_key=True)
     title = Column(Unicode(255), unique=True, nullable=False)
     content = Column(UnicodeText, default=u'')
+    u_id = Column(Integer, ForeignKey('users.id_U'))
+    user=relationship('User', backref = backref('articles',lazy='dinamic'))
+    Cdate = Column(DateTime, default=datetime.datetime.utcnow)
 
-#соединим Статьи и их авторов:
 class UserArticle(Base):
     __tablename__ = 'art_user'
     id = Column(Integer, ForeignKey('articles.id_A'), primary_key=True)

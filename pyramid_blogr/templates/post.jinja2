@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Post{% endblock %}
+{% block backscript %}
+<{% endblock %}
+{% block pagetext %}
+<!-- Begin Wrapper -->
+<div class="wrapper">
+
+<!-- Begin Container -->
+<div class="content">
+
+		<!-- Begin Post -->
+		<div class="post format-image box"> 
+
+			<div class="details">
+				<span class="icon-image">Дата: {{article.Cdate}}</span>
+				<span class="comments">Автор: {{article.user.name}}</span>
+			</div>
+		
+			<h1 class="title">{{article.title}}</h1>
+			<p class="content">{{article.content}}/p>
+		
+		</div>
+		<!-- End Post --> 	
+	
+</div>
+<!-- End Container -->
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Create{% endblock %}
+{% block backscript %}
+<script type="text/javascript">
+	$.backstretch("style/images/bg/4.jpg");
+</script>	
+<{% endblock %}
+{% block pagetext %}
+<!-- Begin Wrapper -->
+<div class="wrapper">
+
+
+<!-- Begin Container -->
+<div class="content">
+
+	
+		<!-- Begin Comment Wrapper -->
+		<div id="comment-wrapper" class="box">
+	
+		<!-- Begin Form -->
+		<div id="comment-form" class="comment-form">
+		
+			<div id="respond">
+						<h3 id="reply-title">Создать запись</h3>
+						<br>
+						<form action="#" method="post" id="commentform">
+							
+							<p class="comment-form-author">
+								<label for="article">Название: </label> 
+								<input id="article" name="title" type="text" size="30" aria-required='true' />
+							</p>
+							<p class="comment-form-comment">
+								<label for="comment">Текст статьи</label>
+								<textarea id="comment" name="content" cols="45"  aria-required="true"></textarea>
+							</p>
+							<p class="form-submit">
+								<input name="submit" type="submit" id="submit" value="Создать" />
+							</p>
+						</form>
+			</div><!-- #respond -->	
+	  	
+		</div>
+		<!-- End Form -->	
+		
+		
+		</div>	
+		<!-- End Comment Wrapper -->
+
+</div>
+<!-- End Container -->
+{% endblock %}

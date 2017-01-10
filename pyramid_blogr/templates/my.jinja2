@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}My{% endblock %}
+{% block backscript %}
+<script type="text/javascript">
+	$.backstretch("style/images/bg/5.jpg");
+</script>
+{% endblock %}
+{% block pagetext %}
+
+<!-- Begin Wrapper -->
+<div class="wrapper"><!-- Begin Intro -->
+<div class="intro">
+Ваши записи...
+</div>
+
+<!-- Begin Blog Grid -->
+<div class="blog-wrap">
+	<!-- Begin Blog -->
+	<div class="blog-grid">
+		
+ 			{% for article in articles %}
+ 		<!-- Begin Standard Format -->
+ 		<div class="post format-standard box"> 
+
+			<h2 class="title"><a href="/post/{{article.id}}">{{article.title}}</a></h2>
+			<h4 class="au">{{article.user.name}}</h4>
+			<p>начало...</p>
+	
+			<div class="details">
+				<span class="icon-standard">{{article.Cdate}}</span>
+			</div>
+	
+		</div>
+		<!-- End Standard Format --> 
+		{% endfor%}						
+ 	
+ 	</div>
+	<!-- End Blog -->
+</div>
+<!-- End Blog Grid -->
+{% endblock %}
