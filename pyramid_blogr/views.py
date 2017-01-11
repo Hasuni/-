@@ -62,7 +62,6 @@ def blog_create(request):
         DBSession.add(article)
         DBSession.commit()
         return HTTPFound(location = '/post/'+str(article.id))
-    return{}
 
 @view_config(route_name='login', renderer='templates/autorisation.jinja2')
 def login(request):
