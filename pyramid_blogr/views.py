@@ -11,6 +11,20 @@ from .models import (
     # MyModel,
     )
 
+@view_config(route_name='home', renderer='templates/autorisation.jinja2')
+def home(request):
+    if 'form.submitted' in request.params:
+        login=request.params['login']
+        password = request.params['password']
+        DBSession = Session(bind=engine)
+        user = DBSession.query(User).filter(login==User.name).first()
+        if user!=None and user.passwordget(login) == password:
+            headers = remember(request.login)
+            return HTTPFound(location=index.jinja2, headers=headers)
+        else:
+            return HTTPNotFound('incorrect login or password')
+
+
 
 @view_config(route_name='view_blog',renderer='templates/index.jinja2')
 def view_blog(request):
