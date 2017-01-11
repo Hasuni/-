@@ -61,6 +61,9 @@
 				<br><input type="password" name="password" id="password">
 				<br>
 				<br><input type="button" value="Войти" onclick="send('send_info2'), location.href='/index'">
+				{% if message=="Incorrect" %}
+				<br><p>Ошибка в логине/пароле</p>
+				{% endif %}
 				<br><p align=center><a href="/register">Зарегистрироваться</a><p>
 			</form>
 		</div>
