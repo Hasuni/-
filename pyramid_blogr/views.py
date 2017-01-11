@@ -8,7 +8,8 @@ from sqlalchemy.exc import DBAPIError
 from .models import (
     DBSession,
     User,
-    Article
+    Article,
+    Base
     # MyModel,
     )
 
