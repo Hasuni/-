@@ -64,6 +64,12 @@
 				<br><textarea name="aboutme" id="aboutme" rows="3"></textarea>
 				<br>
 				<br><input type="button" value="Зарегистрироваться" onclick="send('send_info')">
+				{% if message=="login" %}
+				<br><p>Логин занят, выберите другой</p>
+				{% endif %}
+				{% if message=="notenough" %}
+				<br><p>Вы заполнили не все необходимые поля</p>
+				{% endif %}
 			</form>
 		</div>
 		<div class="clear"></div>
@@ -73,4 +79,5 @@
 
 </div>
 <!-- End Wrapper -->
-{% endblock %}
+</body>
+</html>
