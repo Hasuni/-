@@ -24,6 +24,8 @@ def home(request):
             return HTTPFound(location=index.jinja2, headers=headers)
         else:
             return HTTPNotFound('incorrect login or password')
+    else:
+        return{}
 
 @view_config(route_name='view_blog',renderer='templates/index.jinja2')
 def view_blog(request):
