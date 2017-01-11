@@ -20,7 +20,6 @@ pyramid_blogr/static/pyramid-16x16.png
 pyramid_blogr/static/pyramid.png
 pyramid_blogr/static/theme.css
 pyramid_blogr/static/theme.min.css
-pyramid_blogr/templates/base.html
 pyramid_blogr/templates/mytemplate.pt
 pyramid_blogr/templates/style.css
 pyramid_blogr/templates/style/images/av.png
