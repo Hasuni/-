@@ -25,8 +25,6 @@ def home(request):
         else:
             return HTTPNotFound('incorrect login or password')
 
-
-
 @view_config(route_name='view_blog',renderer='templates/index.jinja2')
 def view_blog(request):
     posts=DBSession.query(Article).order_by(desc(Post.id))    
@@ -62,6 +60,7 @@ def blog_create(request):
         DBSession.add(article)
         DBSession.commit()
         return HTTPFound(location = '/post/'+str(article.id))
+    return{}
 
 @view_config(route_name='login', renderer='templates/autorisation.jinja2')
 def login(request):
@@ -75,6 +74,7 @@ def login(request):
             return HTTPFound(location=index.jinja2, headers=headers)
         else:
             return HTTPNotFound('incorrect login or password')
+
         
 @view_config(route_name='logout')
 def logout(request):
