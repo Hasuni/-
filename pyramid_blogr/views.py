@@ -74,7 +74,7 @@ def login(request):
             headers = remember(request.login)
             return HTTPFound(location=index.jinja2, headers=headers)
         else:
-            return HTTPNotFound('incorrect login or password')
+            return {'message':"Incorrect"}
 
         
 @view_config(route_name='logout')
@@ -97,3 +97,5 @@ def register(request):
                 DBSession.commit()
                 headers = remember (request, Uname)
                 return HTTPFound(location=index.jinja2, headers=headers)
+            else: message="notenough"
+        else: message="login"
