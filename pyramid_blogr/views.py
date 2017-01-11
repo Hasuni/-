@@ -28,15 +28,20 @@ def home(request):
     else:
         return{}
 
+@view_config(route_name='about',renderer='templates/contact.jinja2')
+def about(request):
+    return {}
+    
 @view_config(route_name='view_blog',renderer='templates/index.jinja2')
 def view_blog(request):
-    posts=DBSession.query(Article).order_by(desc(Post.id))    
-    return dict(posts=posts)
+    posts=DBSession.query(Article).order_by(desc(Article.id_A))    
+    return {'posts':posts}
 
 @view_config(route_name='view_my',renderer='templates/my.jinja2')
 def view_my(request):
-    posts=DBSession.query(Article).filter_by(id=user_id).order_by(desc(Post.id))    
-    return dict(posts=posts)
+    isU_id=request.matchdict['id_U']
+    posts=DBSession.query(Article).filter_by(u_id=thisU_id).order_by(desc(Article.id_A))    
+    return {'posts':posts}
 
 
 @view_config(route_name='blog_article', renderer='templates/post.jinja2')
@@ -81,7 +86,7 @@ def login(request):
 @view_config(route_name='logout')
 def logout(request):
     headers=forget(request)
-    return HTTPFound(location=autorisation.jinja2, headers=headers)
+    return HTTPFound(location='/autorisation', headers=headers)
         
 @view_config(route_name='register', renderer='templates/registration.jinja2')
 def register(request):
@@ -97,7 +102,7 @@ def register(request):
                 DBSession.add(new_user)
                 DBSession.commit()
                 headers = remember (request, Uname)
-                return HTTPFound(location=index.jinja2, headers=headers)
+                return HTTPFound(location='/index', headers=headers)
             else: message="notenough"
         else: message="login"
     return{}
