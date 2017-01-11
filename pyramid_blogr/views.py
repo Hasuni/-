@@ -99,3 +99,4 @@ def register(request):
                 return HTTPFound(location=index.jinja2, headers=headers)
             else: message="notenough"
         else: message="login"
+    return{}
