@@ -1,21 +1,4 @@
 /*-----------------------------------------------------------------------------------*/
-/*	REGISTRATION
-/*-----------------------------------------------------------------------------------*/ 
-function send(form_name){
-	var check1= new RegExp("[0-9a-z_]+@[0-9a-z_^.]+\\.[a-z]{2,3}"); //логин(адрес почты)
-	var check2= new RegExp("^[a-z0-9_]+[a-z0-9_]$"); //пароль
-	if	((check1.test(login.value)==false)||(check2.test(password.value)==false)){
-		if (check1.test(login.value)==false){
-			document.getElementById("error2").style.display="inline-block";
-		}
-		if(check2.test(password.value)==false){
-			document.getElementById("error").style.display="inline-block";
-		}
-	}
-	else {document.forms[form_name].submit();
-	location="index.html";}
-}
-/*-----------------------------------------------------------------------------------*/
 /*	POSTS GRID
 /*-----------------------------------------------------------------------------------*/ 
 $(window).load(function(){
