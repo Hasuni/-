@@ -72,7 +72,7 @@ def login(request):
         user = DBSession.query(User).filter(login==User.name).first()
         if user!=None and user.passwordget(login) == password:
             headers = remember(request.login)
-            return HTTPFound(location=index.jinja2, headers=headers)
+            return HTTPFound(location=/index, headers=headers)
         else:
             return {'message':"Incorrect"}
 
