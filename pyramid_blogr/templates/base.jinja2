@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <title>{% block title %}{% endblock %} - Блог</title>
-<link rel="stylesheet" type="text/css" media="all" href="style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="static/style.css">
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,300italic,300,700,700italic|Open+Sans+Condensed:300,700' rel="stylesheet" type='text/css'>
 
-<script type="text/javascript" src="style/js/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="style/js/jquery.masonry.min.js"></script>
-<script type="text/javascript" src="style/js/jquery.backstretch.min.js"></script>
+<script type="text/javascript" src="static/style/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="static/style/js/jquery.masonry.min.js"></script>
+<script type="text/javascript" src="static/style/js/jquery.backstretch.min.js"></script>
 {% block backscript %}{% endblock %}
-<script type="text/javascript" src="style/js/scripts.js"></script>
+<script type="text/javascript" src="static/style/js/scripts.js"></script>
 </head>
 <body>
 <div class=topline ></div>
@@ -21,8 +21,8 @@
 	<div class="header">
 		<!-- Begin Logo -->
 		<div class="logo">
-		    <a href="index.html">
-				<img src="style/images/logo.png" alt="" />
+		    <a href="index.jinja2">
+				<img src="static/style/images/logo.png" alt="" />
 			</a>
 	    </div>
 		<!-- End Logo -->
@@ -31,12 +31,12 @@
 		<div id="menu-wrapper">
 			<div id="menu" class="menu">
 				<ul id="tiny">
-					<li class="active"><a href="index.html">Главная</a>
+					<li class="active"><a href="index.jinja2">Главная</a>
 					</li>
-					<li><a href="My.html">Мои посты</a></li>					
-					<li><a href="newPost.html">Создать новую запись</a></li>
-					<li><a href="contact.html">О сайте</a></li>
-					<li><a href="Autorisation.html">Выход</a></li>
+					<li><a href="my.jinja2">Мои посты</a></li>					
+					<li><a href="newPost.jinja2">Создать новую запись</a></li>
+					<li><a href="contact.jinja2">О сайте</a></li>
+					<li><a href="autorisation.jinja2">Выход</a></li>
 				</ul>
 			</div>
 		</div>
