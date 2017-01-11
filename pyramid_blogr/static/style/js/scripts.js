@@ -47,33 +47,6 @@ $(this).stop().animate({ opacity: 1.0 }, "fast");
 
 
 /*-----------------------------------------------------------------------------------*/
-/*	FLICKR
-/*-----------------------------------------------------------------------------------*/
-	
-$(document).ready(function($){
-	$('.flickr-feed').dcFlickr({
-		limit: 9, 
-        q: { 
-            id: '51789731@N07',
-			lang: 'en-us',
-			format: 'json',
-			jsoncallback: '?'
-        },
-		onLoad: function(){
-			$('.frame a').prepend('<span class="more"></span>');
-			$('.frame').mouseenter(function(e) {
-
-            $(this).children('a').children('span').fadeIn(300);
-        }).mouseleave(function(e) {
-
-            $(this).children('a').children('span').fadeOut(200);
-        });
-		}
-	});
-});	
-
-
-/*-----------------------------------------------------------------------------------*/
 /*	MENU
 /*-----------------------------------------------------------------------------------*/
 ddsmoothmenu.init({
