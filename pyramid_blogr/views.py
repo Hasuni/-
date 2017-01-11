@@ -4,7 +4,6 @@ from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import remember, forget
 from sqlalchemy.exc import DBAPIError
-from registration.forms import RegistrationForm
 
 from .models import (
     DBSession,
@@ -85,7 +84,7 @@ def logout(request):
         
 @view_config(route_name='register', renderer='templates/registration.jinja2')
 def register(request):
-    form=RegistrationForm(request.POST)
+    headers=forget(request)
     if request.method =='POST' and form.validate():
         Uname = request.params['username']
         Upassword = request.params['password']
