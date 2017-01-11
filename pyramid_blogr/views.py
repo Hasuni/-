@@ -1,7 +1,7 @@
 from pyramid.response import Response
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
-from pyramod.security import remember, forget
+from pyramid.security import remember, forget
 from sqlalchemy.exc import DBAPIError
 
 from .models import (
@@ -11,32 +11,6 @@ from .models import (
     # MyModel,
     )
 
-
-@view_config(route_name='home', renderer='templates/mytemplate.pt')
-def my_view(request):
-    try:
-        # one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
-        one = 1;
-    except DBAPIError:
-        return Response(conn_err_msg, content_type='text/plain', status_int=500)
-    return {'one': one, 'project': 'pyramid_blogr'}
-
-
-conn_err_msg = """\
-Pyramid is having a problem using your SQL database.  The problem
-might be caused by one of the following things:
-
-1.  You may need to run the "initialize_pyramid_blogr_db" script
-    to initialize your database tables.  Check your virtual
-    environment's "bin" directory for this script and try to run it.
-
-2.  Your database server may not be running.  Check that the
-    database server referred to by the "sqlalchemy.url" setting in
-    your "development.ini" file is running.
-
-After you fix the problem, please restart the Pyramid application to
-try it again.
-"""
 
 @view_config(route_name='view_blog',renderer='templates/index.jinja2')
 def view_blog(request):
@@ -58,8 +32,9 @@ def blog_article(request):
     content= post.content   
     if (post is None):
         return HTTPNotFound('No such page')
-    else return {'post':post
-    'ouser': get_user(request.authenticated_userid)}
+    else:
+        return {'post':post,
+                'ouser': get_user(request.authenticated_userid)}
 
 
 @view_config(route_name='blog_create', renderer='templates/newPost.jinja2')
@@ -73,8 +48,8 @@ def blog_create(request):
         DBSession.commit()
         return HTTPFound(location = '/post/'+str(article.id))
 
-@view_config(route_name='login', render='templates/autorisation.jinja2')
-def login(request)
+@view_config(route_name='login', renderer='templates/autorisation.jinja2')
+def login(request):
     if 'form.submitted' in request.params:
         login=request.params['login']
         password = request.params['password']
@@ -84,14 +59,14 @@ def login(request)
             headers = remember(request.login)
             return HTTPFound(location=index.jinja2, headers=headers)
         else:
-            return {message = 'Fail'}
+            return HTTPNotFound('incorrect login or password')
         
 @view_config(route_name='logout')
 def logout(request):
     headers=forget(request)
     return HTTPFound(location=autorisation.jinja2, headers=headers)
         
-@view_config(route_name='register', render='templates/registration.jinja2')
+@view_config(route_name='register', renderer='templates/registration.jinja2')
 def register(request):
     form=RegistrationForm(request.POST)
     if request.method =='POST' and form.validate():
@@ -100,7 +75,7 @@ def register(request):
         Uabout= request.params['aboutme']
         DBSession = Session(bind=engine)
         if DBSession.query(User).filter_by(name=Uname).first==None:
-            if Uname!=None and Uname!="" and Upassword!=None and Upassword!=""
+            if Uname!=None and Upassword!=None:
                 new_user=User(name=Uname, password=Upassword,aboutme=Uabout)
                 DBSession.add(new_user)
                 DBSession.commit()
