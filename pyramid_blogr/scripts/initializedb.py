@@ -7,7 +7,7 @@ from pyramid.paster import (
     setup_logging,
     )
 from pyramid.scripts.common import parse_vars
-from ..models import DBSession, Session, Base, User, Article 
+from ..models import DBSession, Base, User, Article 
 
 
 def main(argv=sys.argv):
