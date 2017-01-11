@@ -4,6 +4,7 @@ from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import remember, forget
 from sqlalchemy.exc import DBAPIError
+from registration.forms import RegistrationForm
 
 from .models import (
     DBSession,
