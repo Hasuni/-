@@ -37,8 +37,7 @@ class Article(Base):
     id_A = Column(Integer, primary_key=True)
     title = Column(Unicode(255), unique=True, nullable=False)
     content = Column(UnicodeText, default=u'')
-    u_id = Column(Integer, ForeignKey('users.id_U'))
-    user=relationship('User', backref = backref('articles',lazy='dinamic'))
+    u_id = Column(Integer, ForeignKey('users.id_U'), primary_key=True)
     Cdate = Column(DateTime, default=datetime.datetime.utcnow)
 
 class UserArticle(Base):
