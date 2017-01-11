@@ -23,7 +23,7 @@ requires = [
     'paginate_sqlalchemy==0.2.0',
     'passlib'
     ]
-
+ 
 setup(name='pyramid_blogr',
       version='0.0',
       description='pyramid_blogr',
@@ -34,7 +34,7 @@ setup(name='pyramid_blogr',
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
         ],
-      author='',
+      author='Zarembo Kate',
       author_email='',
       url='',
       keywords='web wsgi bfg pylons pyramid',
