@@ -1,4 +1,5 @@
 from pyramid.response import Response
+from pyramid.renderers import render
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import remember, forget
