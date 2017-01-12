@@ -6,6 +6,7 @@ from pyramid.security import remember, forget
 from sqlalchemy.exc import DBAPIError
 from sqlalchemy import desc
 from models import DBSession, User, Article, Base
+from datetime import *
 
 def get_user(user_name):
     if user_name!=None:
@@ -55,7 +56,7 @@ def blog_create(request):
             DBSession.add(article)
             DBSession.commit
             return HTTPFound(location = '/post/'+str(article.id))
-        else return{}
+        else: return{}
 
 @view_config(route_name='login', renderer='templates/autorisation.jinja2')
 def login(request):
