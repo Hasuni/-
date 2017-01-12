@@ -59,7 +59,7 @@ def login(request):
     if 'POST'==request.method:
         login = request.params['login']
         password_ = request.params['password']
-        user = DBSession.query(User).filter(User.name=login).first()
+        user = DBSession.query(User).filter(User.name==login).first()
         if user!=None and user.password == password_:
             header_s = remember(request, login)
             return HTTPFound(location='/index', headers=header_s)
