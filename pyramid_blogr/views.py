@@ -49,12 +49,13 @@ def blog_article(request):
 @view_config(route_name='blog_create', renderer='templates/newPost.jinja2')
 def blog_create(request):
         if 'form.submitted' in request.params:
-        Ptitle = request.params['title']
-        Pcontent = request.params['content']
-        article= Article(title=Ptitle, content=Pcontent, u_id=get_user(request.authenticated_userid).id, Cdate=datetime.now())
-        DBSession.add(article)
-        DBSession.commit()
-        return HTTPFound(location = '/post/'+str(article.id))
+            Ptitle = request.params['title']
+            Pcontent = request.params['content']
+            article= Article(title=Ptitle, content=Pcontent, u_id=get_user(request.authenticated_userid).id, Cdate=datetime.now())
+            DBSession.add(article)
+            DBSession.commit
+            return HTTPFound(location = '/post/'+str(article.id))
+        else return{}
 
 @view_config(route_name='login', renderer='templates/autorisation.jinja2')
 def login(request):
