@@ -7,6 +7,11 @@ from sqlalchemy.exc import DBAPIError
 from sqlalchemy import desc
 from models import DBSession, User, Article, Base
 
+def get_user(user_name):
+    if user_name!=None:
+        return DBSession.query(User).filter(User.name==user_name).first()
+    else:return None
+
 @view_config(route_name='home', renderer='/')
 def home(request):
     return HTTPFound(location='/login')
@@ -43,8 +48,7 @@ def blog_article(request):
 
 @view_config(route_name='blog_create', renderer='templates/newPost.jinja2')
 def blog_create(request):
-    form = get_form(request)
-    if 'form.submitted' in request.params:
+        if 'form.submitted' in request.params:
         Ptitle = request.params['title']
         Pcontent = request.params['content']
         article= Article(title=Ptitle, content=Pcontent, u_id=get_user(request.authenticated_userid).id, Cdate=datetime.now())
@@ -74,18 +78,19 @@ def logout(request):
         
 @view_config(route_name='register', renderer='templates/registration.jinja2')
 def register(request):
-    headers=forget(request)
+    if (get_user(request.authenticated_userid)!=None):
+        headers=forget(request)
     if request.method =='POST':
         Uname = request.params['username']
         Upassword = request.params['password']
-        Uabout= request.params['aboutme']
-        if DBSession.query(User).filter_by(User.name==Uname).first==None:
-            if Uname!=None and Upassword!=None:
-                new_user=User(name=Uname, password=Upassword, about=Uabout)
-                DBSession.add(new_user)
-                DBSession.commit()
-                header_s = remember(request, Uname)
+        Uabout = request.params['aboutme']
+        user = DBSession.query(User).filter(User.name==Uname).first()
+        if user==None:
+            if Uname!=None and Uname!="" and Upassword!=None and Upassword!="":
+                DBSession.add(User(name=Uname, password=Upassword, aboutme=Uabout))
+                DBSession.commit
+                header_s = remember(request, User.name)
                 return HTTPFound(location='/index', headers=header_s)
-            else: message="notenough"
-        else: message="login"
+            else: return {'message':"notenough"}
+        else: return {'message':"login"}
     return{}
