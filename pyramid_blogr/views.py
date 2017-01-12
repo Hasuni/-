@@ -5,29 +5,11 @@ from pyramid.httpexceptions import HTTPFound
 from pyramid.security import remember, forget
 from sqlalchemy.exc import DBAPIError
 from sqlalchemy import desc
-from .models import (
-    DBSession,
-    Session,
-    User,
-    Article,
-    Base
-    # MyModel,
-    )
+from models import DBSession, User, Article, Base
 
-@view_config(route_name='home', renderer='templates/autorisation.jinja2')
+@view_config(route_name='home', renderer='/')
 def home(request):
-    if 'form.submitted' in request.params:
-        login=request.params['login']
-        password = request.params['password']
-        DBSession = Session(bind=engine)
-        user = DBSession.query(User).filter(login==User.name).first()
-        if user!=None and user.passwordget(login) == password:
-            headers = remember(request.login)
-            return HTTPFound(location=index.jinja2, headers=headers)
-        else:
-            return HTTPNotFound('incorrect login or password')
-    else:
-        return{}
+    return HTTPFound(location='/login')
 
 @view_config(route_name='about',renderer='templates/contact.jinja2')
 def about(request):
@@ -72,22 +54,23 @@ def blog_create(request):
 
 @view_config(route_name='login', renderer='templates/autorisation.jinja2')
 def login(request):
+    header_s=forget(request)
+    HTTPFound(location='/login')
     if 'POST'==request.method:
-        login=request.params['login']
-        password = request.params['password']
-        DBSession = Session(bind=engine)
-        user = DBSession.query(User).filter(login==User.name).first()
-        if user!=None and user.password == password:
-            headers = remember(request,login)
-            return HTTPFound(location='/index', headers=headers)
+        login = request.params['login']
+        password_ = request.params['password']
+        user = DBSession.query(User).filter(User.name=login).first()
+        if user!=None and user.password == password_:
+            header_s = remember(request, login)
+            return HTTPFound(location='/index', headers=header_s)
         else:
             return {'message':"Incorrect"}
+    return{}
 
-        
 @view_config(route_name='logout')
 def logout(request):
-    headers=forget(request)
-    return HTTPFound(location='/autorisation', headers=headers)
+    header_s=forget(request)
+    return HTTPFound(location = '/', headers=header_s)
         
 @view_config(route_name='register', renderer='templates/registration.jinja2')
 def register(request):
@@ -96,14 +79,13 @@ def register(request):
         Uname = request.params['username']
         Upassword = request.params['password']
         Uabout= request.params['aboutme']
-        DBSession = Session(bind=engine)
         if DBSession.query(User).filter_by(name=Uname).first==None:
             if Uname!=None and Upassword!=None:
                 new_user=User(name=Uname, password=Upassword,aboutme=Uabout)
                 DBSession.add(new_user)
                 DBSession.commit()
-                headers = remember (request, Uname)
-                return HTTPFound(location='/index', headers=headers)
+                header_s = remember (request, Uname)
+                return HTTPFound(location='/index', headers=header_s)
             else: message="notenough"
         else: message="login"
     return{}
