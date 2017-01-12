@@ -63,13 +63,14 @@
 				<br><label for="aboutme">Информация о себе:</label>
 				<br><textarea name="aboutme" id="aboutme" rows="3"></textarea>
 				<br>
-				<br><input type="button" value="Зарегистрироваться" onclick="send('send_info')">
+				<br><input type="submit" value="Зарегистрироваться" onclick="send('send_info')">
 				{% if message=="login" %}
 				<br><p>Логин занят, выберите другой</p>
 				{% endif %}
 				{% if message=="notenough" %}
 				<br><p>Вы заполнили не все необходимые поля</p>
 				{% endif %}
+				<br><p align=center><a href="home">Авторизация</a><p>
 			</form>
 		</div>
 		<div class="clear"></div>

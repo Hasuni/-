@@ -7,6 +7,7 @@ from sqlalchemy.exc import DBAPIError
 from sqlalchemy import desc
 from .models import (
     DBSession,
+    Session,
     User,
     Article,
     Base
@@ -71,13 +72,13 @@ def blog_create(request):
 
 @view_config(route_name='login', renderer='templates/autorisation.jinja2')
 def login(request):
-    if 'form.submitted' in request.params:
+    if 'POST'==request.method:
         login=request.params['login']
         password = request.params['password']
         DBSession = Session(bind=engine)
         user = DBSession.query(User).filter(login==User.name).first()
-        if user!=None and user.passwordget(login) == password:
-            headers = remember(request.login)
+        if user!=None and user.password == password:
+            headers = remember(request,login)
             return HTTPFound(location='/index', headers=headers)
         else:
             return {'message':"Incorrect"}
@@ -91,7 +92,7 @@ def logout(request):
 @view_config(route_name='register', renderer='templates/registration.jinja2')
 def register(request):
     headers=forget(request)
-    if request.method =='POST' and form.validate():
+    if request.method =='POST':
         Uname = request.params['username']
         Upassword = request.params['password']
         Uabout= request.params['aboutme']
