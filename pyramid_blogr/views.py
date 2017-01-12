@@ -22,8 +22,8 @@ def view_blog(request):
 
 @view_config(route_name='view_my',renderer='templates/my.jinja2')
 def view_my(request):
-    isU_id=request.matchdict['id_U']
-    posts=DBSession.query(Article).filter_by(u_id=thisU_id).order_by(desc(Article.id_A))    
+    thisU_id=request.matchdict['id_U']
+    posts=DBSession.query(Article).filter(u_id=thisU_id).order_by(desc(Article.id_A))    
     return {'posts':posts}
 
 
@@ -31,7 +31,7 @@ def view_my(request):
 def blog_article(request):
     DBSession=Session(bind=engine)
     id = request.matchdict['postid']
-    post=DBSession.query(Article).filter_by(id=postid).first()
+    post=DBSession.query(Article).filter(id_A==postid).first()
     title= post.title
     content= post.content   
     if (post is None):
@@ -79,12 +79,12 @@ def register(request):
         Uname = request.params['username']
         Upassword = request.params['password']
         Uabout= request.params['aboutme']
-        if DBSession.query(User).filter_by(name=Uname).first==None:
+        if DBSession.query(User).filter_by(User.name==Uname).first==None:
             if Uname!=None and Upassword!=None:
-                new_user=User(name=Uname, password=Upassword,aboutme=Uabout)
+                new_user=User(name=Uname, password=Upassword, about=Uabout)
                 DBSession.add(new_user)
                 DBSession.commit()
-                header_s = remember (request, Uname)
+                header_s = remember(request, Uname)
                 return HTTPFound(location='/index', headers=header_s)
             else: message="notenough"
         else: message="login"

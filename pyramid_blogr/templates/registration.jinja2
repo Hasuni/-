@@ -53,17 +53,18 @@
 		
 		<div class="two-third last">
 			<h2>Заполните форму регистрации</h2>
-			<form action="" method="post" name="send_info">
+			<br>
+			<form action="" method="post">
 				<label for="username">Ваш логин (email):</label>
-				<br><input type="text" name="username" id="username">
+				<br><input type="text" name="username" id="username" value='{{username}}'>
 				<div id='error2'>Неверный ввод данных адреса почты!</div>
 				<br><label for="password">Пароль:</label>
-				<br><input type="password" name="password" id="password">
+				<br><input type="password" name="password" id="password" value='{{password}}'>
 				<div id='error'>Пароль содержит недопустимые символы!</div>
 				<br><label for="aboutme">Информация о себе:</label>
-				<br><textarea name="aboutme" id="aboutme" rows="3"></textarea>
+				<br><textarea name="aboutme" id="aboutme" rows="3" value='{{aboutme}}'></textarea>
 				<br>
-				<br><input type="submit" value="Зарегистрироваться" onclick="send('send_info')">
+				<br><input type="submit" value="Зарегистрироваться">
 				{% if message=="login" %}
 				<br><p>Логин занят, выберите другой</p>
 				{% endif %}
