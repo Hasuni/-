@@ -24,13 +24,14 @@ def about(request):
 @view_config(route_name='view_blog',renderer='templates/index.jinja2')
 def view_blog(request):
     posts=DBSession.query(Article).order_by(desc(Article.id_A))    
-    return {'posts':posts}
+    return {'posts':posts,
+            'onuser' : get_user(request.authenticated_userid)}
 
 @view_config(route_name='view_my',renderer='templates/my.jinja2')
 def view_my(request):
-    thisU_id=request.matchdict['id_U']
-    posts=DBSession.query(Article).filter(u_id=thisU_id).order_by(desc(Article.id_A))    
-    return {'posts':posts}
+    posts=DBSession.query(Article).filter(Article.u_id == request.authenticated_userid).order_by(desc(Article.id_A))    
+    return {'posts':posts,
+            'onuser' : get_user(request.authenticated_userid)}
 
 
 @view_config(route_name='blog_article', renderer='templates/post.jinja2')
@@ -44,19 +45,19 @@ def blog_article(request):
         return HTTPNotFound('No such page')
     else:
         return {'post':post,
-                'ouser': get_user(request.authenticated_userid)}
+                'onuser': get_user(request.authenticated_userid)}
 
 
 @view_config(route_name='blog_create', renderer='templates/newPost.jinja2')
 def blog_create(request):
-        if 'POST'==request.method:
-            Ptitle = request.params['title']
-            Pcontent = request.params['content']
-            article= Article(title=Ptitle, content=Pcontent, u_id=get_user(request.authenticated_userid).id, Cdate=datetime.now())
-            DBSession.add(article)
-            DBSession.commit
-            return HTTPFound(location = '/post/'+str(article.id))
-        else: return{}
+    if 'POST'==request.method:
+        Ptitle = request.params['title']
+        Pcontent = request.params['content']
+        articlee= Article(id_A=1, title=Ptitle, content=Pcontent, u_id=get_user(request.authenticated_userid).id_U, Cdate=datetime.now())
+        DBSession.add(articlee)
+        DBSession.commit
+        return HTTPFound(location = '/post/'+str(articlee.id_A))
+    else: return{'onuser' : get_user(request.authenticated_userid)}
 
 @view_config(route_name='login', renderer='templates/autorisation.jinja2')
 def login(request):
@@ -71,7 +72,7 @@ def login(request):
             return HTTPFound(location='/index', headers=headers)
         else:
             return {'message':"Incorrect"}
-    return{}
+    return{'onuser' : get_user(request.authenticated_userid)}
 
 @view_config(route_name='logout')
 def logout(request):
@@ -92,7 +93,7 @@ def register(request):
                 DBSession.add(User(name=Uname, password=Upassword, aboutme=Uabout))
                 DBSession.commit
                 headers = remember(request, User.name)
-                return HTTPFound(location='/index', headers=headers)
+                return HTTPFound(location='/', headers=headers)
             else: return {'message':"notenough"}
         else: return {'message':"login"}
-    return{}
+    return{'onuser' : get_user(request.authenticated_userid)}
