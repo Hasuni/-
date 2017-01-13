@@ -33,16 +33,10 @@ def view_my(request):
 
 @view_config(route_name='blog_article', renderer='templates/post.jinja2')
 def blog_article(request):
-    DBSession=Session(bind=engine)
-    id = request.matchdict['postid']
-    post=DBSession.query(Article).filter(id_A==postid).first()
-    title = post.title
-    content = post.content   
-    if (post is None):
-        return HTTPNotFound('No such page')
-    else:
-        return {'post':post,
-                'onuser': get_user(request.authenticated_userid)}
+    idP = int(request.matchdict.get('id'))
+    post = DBSession.query(Article).filter(Article.id_A==idP).first()  
+    return {'post' : post,
+            'onuser': get_user(request.authenticated_userid)}
 
 
 @view_config(route_name='blog_create', renderer='templates/newPost.jinja2')
