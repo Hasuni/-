@@ -1,5 +1,5 @@
 {% extends "base.jinja2" %}
-{% block title %}My{% endblock %}
+{% block title %}Me{% endblock %}
 {% block backscript %}
 <script type="text/javascript">
 	$.backstretch("static/style/images/bg/5.jpg");
@@ -9,8 +9,8 @@
 
 <!-- Begin Wrapper -->
 <div class="wrapper"><!-- Begin Intro -->
-<div class="intro">
-Ваши записи, {{onuser.name}}...
+<div class="introd">
+О пользователе
 </div>
 
 <!-- Begin Blog Grid -->
@@ -18,21 +18,16 @@
 	<!-- Begin Blog -->
 	<div class="blog-grid">
 		
- 			{% for article in articles %}
  		<!-- Begin Standard Format -->
- 		<div class="post format-standard box"> 
-
-			<h2 class="title"><a href="/post/{{article.id}}">{{article.title}}</a></h2>
-			<h4 class="au">{{article.user.name}}</h4>
-			<p>начало...</p>
-	
-			<div class="details">
-				<span class="icon-standard">{{article.Cdate}}</span>
+ 		<div class="contents">
+		 	<div class=ua>
+			<h1 class="title">Логин пользователя:</h1>  <h2>{{onuser.name}}</h2>
+			<br>
+			<h1 class="title">О пользователе:</h1>
+			<h2>{{onuser.aboutme}}</h2>
 			</div>
-	
 		</div>
-		<!-- End Standard Format --> 
-		{% endfor%}						
+		<!-- End Standard Format --> 			
  	
  	</div>
 	<!-- End Blog -->

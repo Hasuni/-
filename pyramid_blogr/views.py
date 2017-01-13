@@ -22,16 +22,13 @@ def about(request):
     return {}
     
 @view_config(route_name='view_blog',renderer='templates/index.jinja2')
-def view_blog(request):
-    posts=DBSession.query(Article).order_by(desc(Article.id_A))    
-    return {'posts':posts,
+def view_blog(request):   
+    return {'posts' : DBSession.query(Article).all(),
             'onuser' : get_user(request.authenticated_userid)}
 
 @view_config(route_name='view_my',renderer='templates/my.jinja2')
 def view_my(request):
-    posts=DBSession.query(Article).filter(Article.u_id == request.authenticated_userid).order_by(desc(Article.id_A))    
-    return {'posts':posts,
-            'onuser' : get_user(request.authenticated_userid)}
+    return {'onuser' : get_user(request.authenticated_userid)}
 
 
 @view_config(route_name='blog_article', renderer='templates/post.jinja2')
@@ -53,7 +50,7 @@ def blog_create(request):
     if 'POST'==request.method:
         Ptitle = request.params['title']
         Pcontent = request.params['content']
-        articlee = Article(title=Ptitle, content=Pcontent, u_id=get_user(request.authenticated_userid).id_U, Cdate=datetime.now())
+        articlee = Article(title=Ptitle, content=Pcontent, u_id=get_user(request.authenticated_userid).id_U, u_n=get_user(request.authenticated_userid).name, Cdate=datetime.now())
         DBSession.add(articlee)
         DBSession.commit
         return HTTPFound(location = '/index')

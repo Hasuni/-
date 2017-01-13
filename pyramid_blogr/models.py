@@ -37,10 +37,11 @@ class Article(Base):
     title = Column(UnicodeText, nullable=False)
     content = Column(UnicodeText, default=u'')
     u_id = Column(Integer, ForeignKey('users.id_U'))
+    u_n = Column(Unicode(255), ForeignKey('users.name'))
     Cdate = Column(DateTime, default=datetime.datetime.utcnow)
 
     def _repr_(self):
-        return self.title+" "+self.content+" "+self.u_id+ " "+self.Cdate
+        return self.title+" "+self.content+" "+self.u_id+" "+self.u_n+ " "+self.Cdate
 
 class UserArticle(Base):
     __tablename__ = 'art_user'

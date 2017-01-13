@@ -18,16 +18,16 @@
 <div class="blog-wrap">
 	<!-- Begin Blog -->
 	<div class="blog-grid">
-		{% for article in articles %}
+		{% for post in posts %}
  		<!-- Begin Standard Format -->
  		<div class="post format-standard box"> 
 
-			<h2 class="title"><a href="/post/{{article.id}}">{{article.title}}</a></h2>
-			<h4 class="au">{{article.user.name}}</h4>
-			<p>начало...</p>
+			<h2 class="title"><a href="/post/{{post.id}}">{{post.title}}</a></h2>
+			<h4 class="au">{{post.u_n}}</h4>
+			<p>{{post.content}}</p>
 	
 			<div class="details">
-				<span class="icon-standard">{{article.Cdate}}</span>
+				<span class="icon-standard">{{post.Cdate}}</span>
 			</div>
 	
 		</div>
