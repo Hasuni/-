@@ -49,7 +49,7 @@ def blog_article(request):
 
 @view_config(route_name='blog_create', renderer='templates/newPost.jinja2')
 def blog_create(request):
-        if 'form.submitted' in request.params:
+        if 'POST'==request.method:
             Ptitle = request.params['title']
             Pcontent = request.params['content']
             article= Article(title=Ptitle, content=Pcontent, u_id=get_user(request.authenticated_userid).id, Cdate=datetime.now())
@@ -60,23 +60,23 @@ def blog_create(request):
 
 @view_config(route_name='login', renderer='templates/autorisation.jinja2')
 def login(request):
-    header_s=forget(request)
+    headers=forget(request)
     HTTPFound(location='/login')
     if 'POST'==request.method:
         login = request.params['login']
         password_ = request.params['password']
         user = DBSession.query(User).filter(User.name==login).first()
         if user!=None and user.password == password_:
-            header_s = remember(request, login)
-            return HTTPFound(location='/index', headers=header_s)
+            headers = remember(request, login)
+            return HTTPFound(location='/index', headers=headers)
         else:
             return {'message':"Incorrect"}
     return{}
 
 @view_config(route_name='logout')
 def logout(request):
-    header_s=forget(request)
-    return HTTPFound(location = '/', headers=header_s)
+    headers=forget(request)
+    return HTTPFound(location = '/', headers=headers)
         
 @view_config(route_name='register', renderer='templates/registration.jinja2')
 def register(request):
@@ -91,8 +91,8 @@ def register(request):
             if Uname!=None and Uname!="" and Upassword!=None and Upassword!="":
                 DBSession.add(User(name=Uname, password=Upassword, aboutme=Uabout))
                 DBSession.commit
-                header_s = remember(request, User.name)
-                return HTTPFound(location='/index', headers=header_s)
+                headers = remember(request, User.name)
+                return HTTPFound(location='/index', headers=headers)
             else: return {'message':"notenough"}
         else: return {'message':"login"}
     return{}
