@@ -31,10 +31,10 @@ def view_my(request):
     return {'onuser' : get_user(request.authenticated_userid)}
 
 
-@view_config(route_name='blog_article', renderer='templates/post.jinja2')
+@view_config(route_name='blog_article',renderer='templates/post.jinja2')
 def blog_article(request):
     idP = request.matchdict.get('id')
-    post = DBSession.query(Article).filter_by(Article.id_A==idP).first()
+    post = DBSession.query(Article).filter(Article.id_A==idP).first()
     return {'post' : post,
             'onuser': get_user(request.authenticated_userid)}
 
