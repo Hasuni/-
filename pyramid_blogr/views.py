@@ -23,7 +23,7 @@ def about(request):
     
 @view_config(route_name='view_blog',renderer='templates/index.jinja2')
 def view_blog(request):   
-    return {'posts' : DBSession.query(Article).all(),
+    return {'posts' : DBSession.query(Article).order_by(Article.id_A.desc()).all(),
             'onuser' : get_user(request.authenticated_userid)}
 
 @view_config(route_name='view_my',renderer='templates/my.jinja2')
@@ -33,8 +33,8 @@ def view_my(request):
 
 @view_config(route_name='blog_article', renderer='templates/post.jinja2')
 def blog_article(request):
-    idP = int(request.matchdict.get('id'))
-    post = DBSession.query(Article).filter(Article.id_A==idP).first()  
+    idP = request.matchdict.get('id')
+    post = DBSession.query(Article).filter_by(Article.id_A==idP).first()
     return {'post' : post,
             'onuser': get_user(request.authenticated_userid)}
 
