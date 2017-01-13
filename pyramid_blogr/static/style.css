@@ -106,6 +106,7 @@ body {
     letter-spacing: 0.2px;
     color: #b9b9b9;
 }
+
 .scanlines {
     position: fixed;
     top: 0px;
@@ -538,11 +539,11 @@ img {
     float: left;
 }
 .icon-standard {
-    background: transparent url(static/style/images/icon-standard.png) no-repeat left 5px;
+    background: transparent url(style/images/icon-standard.png) no-repeat left 5px;
     padding: 0 0 5px 18px;
 }
 .post-nav {
-    background: transparent url(static/style/images/line.png) center top repeat-x;
+    background: transparent url(style/images/line.png) center top repeat-x;
     margin: 0 -5px;
     overflow: hidden;
     position: relative;
@@ -577,7 +578,7 @@ img {
     padding-bottom: 0;
     margin-top: 10px;
     padding-top: 30px;
-    background: transparent url(static/style/images/line.png) top left repeat-x;
+    background: transparent url(style/images/line.png) top left repeat-x;
 }
 .sidebox.widget_text,
 .sidebox.widget_text:first-child {
