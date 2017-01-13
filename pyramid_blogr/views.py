@@ -39,8 +39,8 @@ def blog_article(request):
     DBSession=Session(bind=engine)
     id = request.matchdict['postid']
     post=DBSession.query(Article).filter(id_A==postid).first()
-    title= post.title
-    content= post.content   
+    title = post.title
+    content = post.content   
     if (post is None):
         return HTTPNotFound('No such page')
     else:
@@ -53,10 +53,10 @@ def blog_create(request):
     if 'POST'==request.method:
         Ptitle = request.params['title']
         Pcontent = request.params['content']
-        articlee= Article(id_A=1, title=Ptitle, content=Pcontent, u_id=get_user(request.authenticated_userid).id_U, Cdate=datetime.now())
+        articlee = Article(title=Ptitle, content=Pcontent, u_id=get_user(request.authenticated_userid).id_U, Cdate=datetime.now())
         DBSession.add(articlee)
         DBSession.commit
-        return HTTPFound(location = '/post/'+str(articlee.id_A))
+        return HTTPFound(location = '/index')
     else: return{'onuser' : get_user(request.authenticated_userid)}
 
 @view_config(route_name='login', renderer='templates/autorisation.jinja2')
