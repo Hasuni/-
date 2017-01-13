@@ -1,7 +1,10 @@
 {% extends "base.jinja2" %}
 {% block title %}Post{% endblock %}
 {% block backscript %}
-<{% endblock %}
+<script type="text/javascript">
+	$.backstretch("static/style/images/bg/8.jpg");
+</script>
+{% endblock %}
 {% block pagetext %}
 <!-- Begin Wrapper -->
 <div class="wrapper">
@@ -14,11 +17,11 @@
 
 			<div class="details">
 				<span class="icon-image">Дата: {{post.Cdate}}</span>
-				<span class="comments">Автор: {{post.user.name}}</span>
+				<span class="comments">Автор: {{post.u_n}}</span>
 			</div>
 		
 			<h1 class="title"><br>{{post.title}}</h1>
-			<p class="content"><br>{{post.content}}/p>
+			<p class="content"><br>{{post.content}}</p>
 		
 		</div>
 		<!-- End Post --> 	
