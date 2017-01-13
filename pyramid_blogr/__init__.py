@@ -36,7 +36,7 @@ def main(global_config, **settings):
     config.add_route('view_blog', '/index') 
     config.add_route('register', '/register')
     config.add_route('view_my', '/my')
-    config.add_route('blog_article', '/post/{postid}')
+    config.add_route('blog_article', '/post/{{id}}')
     config.add_route('blog_create','/post')
     config.add_route('login','/login')
     config.add_route('logout','/logout')
